@@ -55,6 +55,7 @@ window.onload = ()=>{
         else{
             seconds--;
         }
+        updateClock();
         console.log(currentTime, seconds);
         setTimeout(timer, 1000);
     }
@@ -63,10 +64,7 @@ window.onload = ()=>{
         console.log("El temporizador termino");
     }
     }
-    
-};
-
-// conexion a frontend
+   // conexion a frontend
 let clock = document.getElementById("clock");
 let cyclesInput = document.getElementById("cycles-input");
 let startButton = document.getElementById("start-button");
@@ -76,9 +74,39 @@ let restTimeinput = document.getElementById("rest-time");
 
 // Funcionalidad del boton
 startButton.onclick = () => {
+    populateVariables();
     startPomodoro();
 };
 function startPomodoro(){
     console.log("Pomodoro iniciado...");
     pomodoroController();
 }
+
+function populateVariables(){
+    console.log("Populate Variables...");
+    workTime = workTimeInput.value;
+    breakTime = breakTimeInput.value;
+    restTime = restTimeinput.value;
+    cyclesGoal = cyclesInput.value;
+    timesCompleted = 0;
+}
+
+let clockMinutes;
+let clockSeconds; 
+function updateClock() {
+    clockMinutes = formatNumbers(currentTime);
+    clockSeconds = formatNumbers(seconds);
+    clock.innerHTML = clockMinutes + ":" + clockSeconds;
+}
+function formatNumbers (time){
+    let formattedDigits;
+    if (time <10 ){
+        formattedDigits = "0" + time;
+    } else{
+        formattedDigits = time;
+    }
+    return formattedDigits;
+}
+};
+
+
